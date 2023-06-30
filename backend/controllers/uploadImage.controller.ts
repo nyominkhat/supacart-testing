@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import Image from "../models/uploadImage.model";
 import { Request, Response } from "express";
 import path from "path";
+
 dotenv.config();
 
 cloudinary.config({
@@ -22,13 +23,13 @@ const handleUploadImageController = async (req: Request, res: Response) => {
     }
 
     const originalFileName = req.file.originalname.split(".")[0];
+
     const compressedFileName = Date.now() + "-" + originalFileName + ".avif";
 
     const compressedImageFilePath = path.join(
       __dirname,
       "../",
       "public",
-      "images",
       compressedFileName
     );
 
@@ -39,12 +40,10 @@ const handleUploadImageController = async (req: Request, res: Response) => {
     );
 
     if (compressedImageResult.size > 1024 * 1024) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "Compressed image size must not excceed 1MB.",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "Compressed image size must not excceed 1MB.",
+      });
     }
     const result = await cloudinary.uploader.upload(compressedImageFilePath);
 
