@@ -71,7 +71,9 @@ export default function ImageUploadClient() {
           </label>
         )}
       </fieldset>
-      {errors.images ? <h1>{errors.images.message}</h1> : null}
+      {errors.images ? (
+        <p className="mt-4 text-red-600">{errors.images.message}</p>
+      ) : null}
       <div className="flex justify-center">
         <button
           className="px-4 py-2 mt-8 text-white rounded-md bg-slate-900 disabled:bg-slate-100"
