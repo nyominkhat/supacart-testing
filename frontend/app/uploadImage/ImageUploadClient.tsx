@@ -21,7 +21,7 @@ export default function ImageUploadClient() {
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm({
     resolver: yupResolver(BookSchema),
   });
 
@@ -33,12 +33,12 @@ export default function ImageUploadClient() {
     setValue("images", []);
   }
 
-  function onSubmit(data: FormData) {
+  const onSubmit = handleSubmit((data) => {
     mutate(data.images[0]);
-  }
+  });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={onSubmit}>
       <fieldset className="relative">
         <input
           type="file"
